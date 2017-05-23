@@ -12,7 +12,6 @@ void print_array(int arg[][7], int rows, int cols){
     }
     cout<<endl;
 }
-
 int main(){
     int arr[2][7] = {{1,2,3,4,5,6,7},{11,22,33,44,55,66,77}};
     print_array(arr,2,7);
