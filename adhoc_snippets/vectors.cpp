@@ -2,7 +2,6 @@
 #include<vector>
 
 using namespace std;
-
 int main(){
     vector<int> v (3,100);
     vector<int>::iterator it;
