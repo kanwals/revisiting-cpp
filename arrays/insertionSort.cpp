@@ -11,31 +11,25 @@ void printVector(const vector<int> &A){
     }
     cout<< "]";
 }
-
 vector<int> copyValueRight(vector<int> &v, int index, int shiftBy = 1){
     v[index+shiftBy]=v[index];
-    cout<<endl<<"After right shifting: ";
-    printVector(v);
     return v;
 }
 
 vector<int> insertionSort(vector<int> v){
     int vectSize = v.size();
-    int sortedUptoIndex = 0;
-    int temp;
-    for(int i=1; i<vectSize-1; i++){
-        if(v[i]<v[sortedUptoIndex]){
-            for(int j=sortedUptoIndex; j>=0; j--){
-                if(v[j]>v[i]){
-                    temp = v[i];
-                    copyValueRight(v,j);
-                }
-                v[j]=temp;
-                printVector(v);
+    int val;
+    int holeIndex;
+    for(int i=1; i<vectSize; i++){
+        val = v[i];
+        holeIndex=i;
+        for(int j=i-1; j>=0; j--){
+            if(v[j]>val){
+                copyValueRight(v,j);
+                holeIndex=j;
             }
-            sortedUptoIndex++;
         }
-        sortedUptoIndex++;
+        v[holeIndex]=val;
     }
     return v;
 }
