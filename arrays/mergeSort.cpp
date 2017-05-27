@@ -2,63 +2,74 @@
 #include<vector>
 using namespace std;
 
-void printVector(const vector<int> &A){
+void printArray(int *A, int arr_size)
+{
     cout<<endl<<"[ ";
-    for(int i=0; i<A.size(); i++){
+    for(int i=0; i<arr_size; i++)
+    {
         cout<<A[i];
-        if (i!=A.size()-1)
+        if (i!=arr_size-1)
             cout<<", ";
     }
     cout<< "]";
 }
 
-void merge(vector<int> L, vector<int> R, vector<int> &result){
+void merge(int *arr, int l, int m, int r)
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 =  r - m;
 
-    printVector(L);
-    printVector(R);
-    int l=L.size();
-    int r=R.size();
-    int i=0; int j=0; int k=0;
-    while(i<l && j<r){
-        if(L[i]<R[j]){
-            result.push_back(L[i]); i++;
-        } else if (L[i]>R[j]){
-            result.push_back(R[j]); j++;
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1+ j];
+
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            arr[k++] = L[i++];
+        }
+        else
+        {
+            arr[k++] = R[j++];
         }
     }
-    if(i<l){
-        while(i<l){
-            result.push_back(L[i]); i++;
-        }
-    } else {
-        while(j<r){
-            result.push_back(R[j]); j++;
-        }
+
+    while (i < n1)
+    {
+        arr[k++] = L[i++];
     }
-    printVector(result);
-    cout<<endl<<"==============================="<<endl;
+
+    while (j < n2)
+    {
+        arr[k++] = R[j++];
+    }
 }
 
-vector<int> mergeSort(vector<int> v){
-    int vectSize = v.size();
-    vector<int> dup;
-    if(vectSize<2)
-        return v;
-    int mid = vectSize/2;
-    vector<int> L {v.begin(), v.begin() + mid};
-    vector<int> R {v.begin()+ mid, v.end()};
-    mergeSort(L);
-    mergeSort(R);
-    merge(L,R,dup);
+void mergeSort(int *v, int l, int r)
+{
+    if(l<r)
+    {
+        int m = l + (r-l)/2;
+        mergeSort(v, l, m);
+        mergeSort(v, m+1, r);
+        merge(v, l, m, r);
+    }
 }
 
-
-int main(){
-    vector<int> v {2,4,1,6,8,5,3,7};
+int main()
+{
+    int v[] = {2,4,1,6,8,5,3,7,9};
+    int arr_size=sizeof(v)/sizeof(v[0]);
+    cout<<arr_size;
     cout<<"Unsorted array: ";
-    printVector(v);
-    vector<int> result = mergeSort(v);
-    cout<<endl<<endl<<"Sorted array: ";
-    printVector(result);
+    printArray(v, arr_size);
+    mergeSort(v, 0, arr_size);
+    cout<<endl<<"Sorted array: ";
+    printArray(v, arr_size);
 }
 
