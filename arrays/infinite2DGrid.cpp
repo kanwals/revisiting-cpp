@@ -24,6 +24,10 @@ This question is intentionally left slightly vague. Clarify the question by tryi
 
 // Input : X and Y co-ordinates of the points in order.
 // Each point is represented by (X[i], Y[i])
+
+
+
+
 #include<cmath>
 
 int findMinDist(int x1, int x2, int y1, int y2){
@@ -40,3 +44,4 @@ int Solution::coverPoints(vector<int> &X, vector<int> &Y) {
     }
     return dist;
 }
+
