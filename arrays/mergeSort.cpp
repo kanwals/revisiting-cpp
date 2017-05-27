@@ -2,31 +2,35 @@
 #include<vector>
 using namespace std;
 
-void printArray(int *A, int arr_size)
-{
+void printVector(const vector<int> &A){
     cout<<endl<<"[ ";
-    for(int i=0; i<arr_size; i++)
-    {
+    for(int i=0; i<A.size(); i++){
         cout<<A[i];
-        if (i!=arr_size-1)
+        if (i!=A.size()-1)
             cout<<", ";
     }
     cout<< "]";
 }
 
-void merge(int *arr, int l, int m, int r)
+void merge(vector<int> &arr, int l, int m, int r)
 {
     int i, j, k;
     int n1 = m - l + 1;
     int n2 =  r - m;
 
+    /* create temp arrays */
     int L[n1], R[n2];
 
+    /* Copy data to temp arrays L[] and R[] */
     for (i = 0; i < n1; i++)
         L[i] = arr[l + i];
     for (j = 0; j < n2; j++)
         R[j] = arr[m + 1+ j];
 
+    /* Merge the temp arrays back into arr[l..r]*/
+    i = 0; // Initial index of first subarray
+    j = 0; // Initial index of second subarray
+    k = l; // Initial index of merged subarray
     while (i < n1 && j < n2)
     {
         if (L[i] <= R[j])
@@ -39,18 +43,22 @@ void merge(int *arr, int l, int m, int r)
         }
     }
 
+    /* Copy the remaining elements of L[], if there
+       are any */
     while (i < n1)
     {
         arr[k++] = L[i++];
     }
 
+    /* Copy the remaining elements of R[], if there
+       are any */
     while (j < n2)
     {
         arr[k++] = R[j++];
     }
 }
 
-void mergeSort(int *v, int l, int r)
+void mergeSort(vector<int> &v, int l, int r)
 {
     if(l<r)
     {
@@ -58,18 +66,18 @@ void mergeSort(int *v, int l, int r)
         mergeSort(v, l, m);
         mergeSort(v, m+1, r);
         merge(v, l, m, r);
+//        printVector(v);
     }
 }
 
 int main()
 {
-    int v[] = {2,4,1,6,8,5,3,7,9};
-    int arr_size=sizeof(v)/sizeof(v[0]);
-    cout<<arr_size;
+    vector<int> v = {2,-4,1,6,-8,5,3,7,9,0};
+    int arr_size=v.size();
     cout<<"Unsorted array: ";
-    printArray(v, arr_size);
+    printVector(v);
     mergeSort(v, 0, arr_size);
     cout<<endl<<"Sorted array: ";
-    printArray(v, arr_size);
+    printVector(v);
 }
 
